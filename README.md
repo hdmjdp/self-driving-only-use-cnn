@@ -8,3 +8,7 @@ python3 drive.py saved_models/track1/model.pb
 
 训练：
 python3 train.py -d ./data -s saved_models/track2
+
+ckpt====> pb
+
+python3 freeze.py -m saved_models/track2
