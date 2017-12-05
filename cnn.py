@@ -18,8 +18,10 @@ class DenseLayer(object):
         self.shape = shape
         # self.W = tf.get_variable("W_dense{}".format(idx), shape=shape,
         #                          initializer=tf.contrib.keras.initializers.glorot_uniform())
-        self.W = tf.get_variable("W_dense{}".format(idx), initializer=tf.truncated_normal(shape=shape, stddev=0.01))# stddev=1.0/math.sqrt(mi)
-        # self.W = tf.get_variable("W_dense{}".format(idx), initializer=tf.glorot_uniform_initializer())
+        # self.W = tf.get_variable("W_dense{}".format(idx), initializer=tf.truncated_normal(shape=shape, stddev=0.01))# stddev=1.0/math.sqrt(mi)
+        # self.W = tf.get_variable("W_dense{}".format(idx), shape=shape, initializer=tf.glorot_uniform_initializer())
+        self.W = tf.Variable(tf.truncated_normal(shape=shape, stddev=0.01))  # stddev=1.0/math.sqrt(mi)
+        # 这里不能用get_variable cuda会报错
         self.b = tf.get_variable("b_dense{}".format(idx), shape=[mo],
                                  initializer=tf.zeros_initializer(), dtype=tf.float32)
         self.params = [self.W, self.b]
@@ -50,9 +52,9 @@ class ConvLayer(object):
         self.shape = shape
         # self.W = tf.get_variable("W_conv{}".format(idx), shape=shape,   #tf.TruncatedNormal(stddev=0.01)
         #                          initializer=tf.contrib.keras.initializers.glorot_uniform()) #  tf.contrib.layers.xavier_initializer()
-        self.W = tf.get_variable("W_conv{}".format(idx), initializer=tf.truncated_normal(shape=shape, stddev=0.01)) #stddev=1.0/math.sqrt(mi)
-        # self.W = tf.get_variable("W_conv{}".format(idx), initializer=tf.glorot_uniform_initializer())
-
+        # self.W = tf.get_variable("W_conv{}".format(idx), initializer=tf.truncated_normal(shape=shape, stddev=0.01)) #stddev=1.0/math.sqrt(mi)
+        # self.W = tf.get_variable("W_conv{}".format(idx), shape=shape, initializer=tf.glorot_uniform_initializer())
+        self.W = tf.Variable(tf.truncated_normal(shape=shape, stddev=0.01))
         self.b = tf.get_variable("b_conv{}".format(idx), shape=[mo],
                                  initializer=tf.zeros_initializer(), dtype=tf.float32)
         self.ksize = ksize
